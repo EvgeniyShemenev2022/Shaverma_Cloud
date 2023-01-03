@@ -11,7 +11,7 @@ public class Ingredient {
 
 
     public enum Type {
-        PLATE, MEET, NO_MEET, CHEESE, SAUCE
+        WRAP, MEET, VEGGIES, CHEESE, SAUCE
     }
 
 }

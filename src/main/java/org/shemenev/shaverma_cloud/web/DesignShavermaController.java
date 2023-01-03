@@ -7,10 +7,7 @@ import org.shemenev.shaverma_cloud.shaverma.Shava;
 import org.shemenev.shaverma_cloud.shaverma.ShavaOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.shemenev.shaverma_cloud.shaverma.Ingredient.Type;
 
 import java.util.Arrays;
@@ -26,16 +23,16 @@ public class DesignShavermaController {
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("ONPL", "На Тарелке", Type.PLATE),
-                new Ingredient("ROSK", "Роскошная", Type.PLATE),
-                new Ingredient("KURI", "Мясная Куриная", Type.MEET),
-                new Ingredient("GOVY", "Мясная с Говядиной", Type.MEET),
-                new Ingredient("TOMA", "Томатная", Type.NO_MEET),
-                new Ingredient("SALA", "Салатная", Type.NO_MEET),
-                new Ingredient("SIRN", "Сырная", Type.CHEESE),
-                new Ingredient("FOUR", "Четыре Сыра", Type.CHEESE),
-                new Ingredient("CHES", "Чесночная", Type.SAUCE),
-                new Ingredient("MEXC", "Мексиканская", Type.SAUCE)
+                new Ingredient("WRLA", "Лаваш", Type.WRAP),
+                new Ingredient("WRPI", "Пита", Type.WRAP),
+                new Ingredient("MEKU", "Курица", Type.MEET),
+                new Ingredient("MEGO", "Говядина", Type.MEET),
+                new Ingredient("VETO", "Томаты", Type.VEGGIES),
+                new Ingredient("VESA", "Салат", Type.VEGGIES),
+                new Ingredient("CHCD", "Сыр Чеддер", Type.CHEESE),
+                new Ingredient("CHFO", "Четыре Сыра", Type.CHEESE),
+                new Ingredient("SASP", "Пряный", Type.SAUCE),
+                new Ingredient("SAHO", "Острый", Type.SAUCE)
         );
         Type[] types = Ingredient.Type.values();
 
@@ -65,6 +62,14 @@ public class DesignShavermaController {
     @GetMapping
     public String showDesignForm() {
         return "design";
+    }
+
+    @PostMapping // сообщает аннотации @RequestMapping на уровне класса, что метод будет обрабатывать запросы POST с путем /design.
+    public String processTaco(Shava shava, @ModelAttribute ShavaOrder shavaOrder) {
+        shavaOrder.addShava(shava);
+        log.info("Приготовление шавермы: {}", shava);
+
+        return "redirect:/orders/current";
     }
 
 

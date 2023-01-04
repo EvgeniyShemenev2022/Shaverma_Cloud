@@ -41,14 +41,6 @@ public class DesignShavermaController {
                     filterByType(ingredients, type));
         }
     }
-
-    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
-        return ingredients
-                .stream()
-                .filter(x -> x.getType().equals(type))
-                .collect(Collectors.toList());
-    }
-
     @ModelAttribute(name = "shavaOrder")
     public ShavaOrder order() {
         return new ShavaOrder();
@@ -72,5 +64,11 @@ public class DesignShavermaController {
         return "redirect:/orders/current";
     }
 
+    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
+        return ingredients
+                .stream()
+                .filter(x -> x.getType().equals(type))
+                .collect(Collectors.toList());
+    }
 
 }

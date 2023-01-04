@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<!--/* Workaround for bug https://youtrack.jetbrains.com/issue/IDEA-132738 -->
+<!--@thymesVar id="post" type="your.package.Post"-->
+<!--@thymesVar id="title" type="String"-->
+<!--@thymesVar id="content" type="String"-->
+<!--*/-->
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Sheverma_cloude</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+
+<body>
+<form method="POST" th:action="@{/orders}" th:object="${shavaOrder}">
+    <h1>Закажи свою шаверму! </h1>
+    <img th:src="@{/images/kebab_PNG50.png}"
+         width="250"
+         height="300"/>
+    <h3>Ваш заказ состоит из:</h3>
+    <a th:href="@{/design}" id="another">Создать другую шаверму! </a><br/>
+    <ul>
+        <li th:each="shava : ${shavaOrder.shavaList}">
+            <span th:text="${shava.name}">shava name</span></li>
+    </ul>
+    <h3>Доставить мою шаверму...</h3>
+    <label for="deliveryName">Имя: </label>
+    <input type="text" th:field="*{deliveryName}"/>
+    <br/>
+    <br/>
+    <label for="deliveryStreet">Улица: </label>
+    <input type="text" th:field="*{deliveryStreet}"/>
+    <br/>
+    <br/>
+    <label for="deliveryCity">Город: </label>
+    <input type="text" th:field="*{deliveryCity}"/>
+    <br/>
+    <br/>
+    <label for="deliveryRegion">Область: </label>
+    <input type="text" th:field="*{deliveryRegion}"/>
+    <br/>
+    <br/>
+    <label for="deliveryZip">Номер телефона: </label>
+    <input type="text" th:field="*{deliveryZip}"/>
+    <br/>
+    <br/>
+
+    <h3>Способ оплаты...</h3>
+    <label for="ccNumber">Номер карты #: </label>
+    <input type="text" th:field="*{ccNumber}"/>
+    <br/>
+    <br/>
+    <label for="ccExpiration">действует до: </label>
+    <input type="text" th:field="*{ccExpiration}"/>
+    <br/>
+    <br/>
+    <label for="ccCVV">CVV: </label>
+    <input type="text" th:field="*{ccCVV}"/>
+    <br/>
+    <br/>
+    <input type="submit" value="Подтвердить заказ"/>
+</form>
+</body>
+</html>

@@ -18,25 +18,25 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
     // временное решение, пока отсутствует подключение к БД
     public IngredientByIdConverter() {
-        ingredientMap.put("FLTO",
+        ingredientMap.put("WRLA",
                 new Ingredient("WRLA", "Лаваш", Type.WRAP));
-        ingredientMap.put("COTO",
+        ingredientMap.put("WRPI",
                 new Ingredient("WRPI", "Пита", Type.WRAP));
-        ingredientMap.put("GRBF",
+        ingredientMap.put("MEKU",
                 new Ingredient("MEKU", "Курица", Type.MEET));
-        ingredientMap.put("CARN",
+        ingredientMap.put("MEGO",
                 new Ingredient("MEGO", "Говядина", Type.MEET));
-        ingredientMap.put("TMTO",
+        ingredientMap.put("VETO",
                 new Ingredient("VETO", "Томаты", Type.VEGGIES));
-        ingredientMap.put("LETC",
+        ingredientMap.put("VESA",
                 new Ingredient("VESA", "Салат", Type.VEGGIES));
-        ingredientMap.put("CHED",
+        ingredientMap.put("CHCD",
                 new Ingredient("CHCD", "Сыр Чеддер", Type.CHEESE));
-        ingredientMap.put("JACK",
+        ingredientMap.put("CHFO",
                 new Ingredient("CHFO", "Четыре Сыра", Type.CHEESE));
-        ingredientMap.put("SLSA",
+        ingredientMap.put("SASP",
                 new Ingredient("SASP", "Пряный", Type.SAUCE));
-        ingredientMap.put("SRCR",
+        ingredientMap.put("SAHO",
                 new Ingredient("SAHO", "Острый", Type.SAUCE));
     }
 

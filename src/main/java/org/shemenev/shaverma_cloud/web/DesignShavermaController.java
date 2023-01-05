@@ -1,12 +1,14 @@
 package org.shemenev.shaverma_cloud.web;
 
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.shemenev.shaverma_cloud.shaverma.Ingredient;
 import org.shemenev.shaverma_cloud.shaverma.Shava;
 import org.shemenev.shaverma_cloud.shaverma.ShavaOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.shemenev.shaverma_cloud.shaverma.Ingredient.Type;
 
@@ -56,8 +58,17 @@ public class DesignShavermaController {
         return "design";
     }
 
+
+    /**
+     * Аннотация @Valid требует выполнить проверку отправленного
+     * объекта Taco после его привязки к данным в отправленной форме, но
+     * до начала выполнения тела метода processTaco().
+     */
     @PostMapping // сообщает аннотации @RequestMapping на уровне класса, что метод будет обрабатывать запросы POST с путем /design.
-    public String processTaco(Shava shava, @ModelAttribute ShavaOrder shavaOrder) {
+    public String processTaco(@Valid Shava shava, Errors errors, @ModelAttribute ShavaOrder shavaOrder) {
+        if (errors.hasErrors()){
+            return "design";
+        }
         shavaOrder.addShava(shava);
         log.info("Приготовление шавермы: {}", shava);
 

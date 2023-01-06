@@ -10,6 +10,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * класс - репозиторий,
+ * реализация IngredientRepository, которая использует JdbcTemplate для запросов
+ * к базе данных.
+ */
 @Repository
 public class JdbcIngredientRepository implements IngredientRepository {
 

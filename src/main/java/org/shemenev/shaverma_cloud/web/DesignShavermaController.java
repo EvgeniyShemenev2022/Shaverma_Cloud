@@ -3,9 +3,11 @@ package org.shemenev.shaverma_cloud.web;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.shemenev.shaverma_cloud.data.IngredientRepository;
 import org.shemenev.shaverma_cloud.shaverma.Ingredient;
 import org.shemenev.shaverma_cloud.shaverma.Shava;
 import org.shemenev.shaverma_cloud.shaverma.ShavaOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,10 +21,28 @@ import java.util.stream.Collectors;
 @Slf4j         // (Simple Logging Facade for Java – простой интерфейс журналирования для Java
 @Controller    // отмечает класс как доступный для механизма сканирования компонентов
 @RequestMapping("/design")   // будет обрабатывать запросы, пути в которых начинаются с /design.
-@SessionAttributes("shavaOrder")  // указывает, что объект ShavaOrder, объявленный в классе, должен поддерживаться на уровне сеанса.
+@SessionAttributes("shavaOrder")
+// указывает, что объект ShavaOrder, объявленный в классе, должен поддерживаться на уровне сеанса.
 public class DesignShavermaController {
 
+    private final IngredientRepository ingredientRepo;
+
+    @Autowired
+    public DesignShavermaController(IngredientRepository ingredientRepo) {
+        this.ingredientRepo = ingredientRepo;
+    }
+
     @ModelAttribute
+    public void addIngredientsToModel(Model model) {
+        Iterable<Ingredient> ingredients = ingredientRepo.findAll();
+        Type[] types = Ingredient.Type.values();
+        for (Type type : types) {
+            // !!! ingredients casted to List<Ingredient>
+            model.addAttribute(type.toString().toLowerCase(), filterByType((List<Ingredient>) ingredients, type));
+        }
+    }
+
+    /*@ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("WRLA", "Лаваш", Type.WRAP),
@@ -42,7 +62,8 @@ public class DesignShavermaController {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }
-    }
+    }*/
+
     @ModelAttribute(name = "shavaOrder")
     public ShavaOrder order() {
         return new ShavaOrder();
@@ -64,9 +85,10 @@ public class DesignShavermaController {
      * объекта Taco после его привязки к данным в отправленной форме, но
      * до начала выполнения тела метода processTaco().
      */
-    @PostMapping // сообщает аннотации @RequestMapping на уровне класса, что метод будет обрабатывать запросы POST с путем /design.
+    @PostMapping
+    // сообщает аннотации @RequestMapping на уровне класса, что метод будет обрабатывать запросы POST с путем /design.
     public String processTaco(@Valid Shava shava, Errors errors, @ModelAttribute ShavaOrder shavaOrder) {
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "design";
         }
         shavaOrder.addShava(shava);
@@ -83,3 +105,7 @@ public class DesignShavermaController {
     }
 
 }
+
+//page 98
+
+
